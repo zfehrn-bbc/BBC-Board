@@ -71,16 +71,19 @@
 						<div class="list-group">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<h4><span class="glyphicon glyphicon-console" aria-hidden="true"></span> API</h4>
+									<h4>
+										<span class="glyphicon glyphicon-console" aria-hidden="true"></span>
+										API
+									</h4>
 								</h3>
 							</div>
 							
-							<?php 
+							<?php
 							$query = "select * from kapitel where fachrichtung = 'a'";
-							$resultat = $mysqli->query($query);
-							while ($result = $resultat->fetch_array()) {
-							?>
-							<a href="<?php echo $result['pfad'] ?>" class="list-group-item"><?php echo $result['name'] ?></a>
+							$resultat = $mysqli->query ( $query );
+							while ( $result = $resultat->fetch_array () ) {
+								?>
+							<a href="thema.php?id=<?php echo $result['pfad'] ?>" class="list-group-item"><?php echo $result['name'] ?></a>
 							
 							<?php } ?>
 						</div>
@@ -91,16 +94,19 @@
 						<div class="list-group">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<h4><span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> SYS</h4>
+									<h4>
+										<span class="glyphicon glyphicon-hdd" aria-hidden="true"></span>
+										SYS
+									</h4>
 								</h3>
 							</div>
 							
-							<?php 
+							<?php
 							$query = "select * from kapitel where fachrichtung = 's'";
-							$resultat = $mysqli->query($query);
-							while ($result = $resultat->fetch_array()) {
-							?>
-							<a href="<?php echo $result['pfad'] ?>" class="list-group-item"><?php echo $result['name'] ?></a>
+							$resultat = $mysqli->query ( $query );
+							while ( $result = $resultat->fetch_array () ) {
+								?>
+							<a href="thema.php?id=<?php echo $result['pfad'] ?>" class="list-group-item"><?php echo $result['name'] ?></a>
 							
 							<?php } ?>
 							
