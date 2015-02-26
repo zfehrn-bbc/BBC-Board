@@ -12,8 +12,8 @@ $kapdaten = $mysqli->query ( $query );
 
 $row = $kapdaten->fetch_array ();
 
-$query = "SELECT t.id, t.kapitel_id, user, titel, frage, time, k.name as kapitel, k.pfad as pfad 
-FROM thread as t JOIN kapitel as k ON t.kapitel_id=k.id where k.pfad = '$id'";
+$query = "SELECT t.id, t.kapitel_id, user, titel, frage, time, k.name as kapitel, 
+k.pfad as pfad FROM thread as t JOIN kapitel as k ON t.kapitel_id=k.id where k.pfad = '$id' order by time DESC ";
 $thrdaten = $mysqli->query ( $query );
 
 ?>
@@ -99,8 +99,8 @@ $thrdaten = $mysqli->query ( $query );
 							<h3 class="panel-title">
 								<small style="color: blue;"><?php echo "/" . $row2['pfad'] . " "; ?></small><?php echo $row2['user'] . " - " . $row2['time']; ?></h3>
 						</div>
-							<div class="panel-body"><a href="thread.php?id=<?php echo $row2['id'] ?>">
-								<strong><?php echo $row2["titel"]; ?></strong></a>
+						<div class="panel-body">
+							<a href="thread.php?id=<?php echo $row2['id'] ?>"> <strong><?php echo $row2["titel"]; ?></strong></a>
 								<?php echo " - " . substr($row2['frage'], 0, 100) . "..."; ?>
 							</div>
 					</div>

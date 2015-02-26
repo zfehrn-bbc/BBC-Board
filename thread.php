@@ -7,14 +7,12 @@ if (isset ( $_GET ["id"] ) && $_GET ["id"] != null) {
 	header ( "Location: index.php" );
 }
 
-$query = "select * from kapitel where pfad='$id'";
-$kapdaten = $mysqli->query ( $query );
-
-$row = $kapdaten->fetch_array ();
-
-$query = "SELECT t.id, t.kapitel_id, user, titel, frage, time, k.name as kapitel, k.pfad as pfad 
-FROM thread as t JOIN kapitel as k ON t.kapitel_id=k.id where k.pfad = '$id'";
+$query = "select t.id, t.user, t.titel, t.frage, t.time, k.name, k.pfad from thread as t join kapitel as k on t.kapitel_id=k.id where t.id=$id";
 $thrdaten = $mysqli->query ( $query );
+$thr = $thrdaten->fetch_array ();
+
+$query2 = "SELECT a.user, a.comment, a.time, a.voting from answer as a join thread as t on a.thread_id=t.id where t.id = $id";
+$ansdaten = $mysqli->query ( $query2 );
 
 ?>
 <html lang="en">
@@ -26,7 +24,7 @@ $thrdaten = $mysqli->query ( $query );
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>BBC Board - <?php echo $row["name"]; ?></title>
+<title>BBC Board - <?php echo $thr["titel"]; ?></title>
 
 <!-- Bootstrap Core CSS -->
 <!-- Bootstrap core CSS -->
@@ -79,22 +77,102 @@ $thrdaten = $mysqli->query ( $query );
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
-							<h1><?php echo $row["name"]; ?></h1>
-							<small><?php echo "/" . $row["pfad"]; ?></small>
+							<h1><?php echo $thr["name"]; ?></h1>
+							<small><?php echo "/" . $thr["pfad"]; ?> - <?php echo $thr['user']; ?> - <?php echo $thr["titel"]; ?></small>
 
 						</div>
+
+						<ol class="breadcrumb">
+							<li><a href="#">Home</a></li>
+							<li><a href="#">Library</a></li>
+							<li class="active">Data</li>
+						</ol>
+
 					</div>
 				</div>
 			</div>
 			<!-- End of title -->
 
-			<!-- Sections of Board -->
+			<!-- Thread Frage -->
 			<div class="row">
 				<div class="col-lg-1"></div>
-				<div class="col-lg-10"></div>
+				<div class="col-lg-10">
+
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<a href="#"><?php echo $thr['user']; ?></a> - 
+							<?php echo $thr['titel']; ?></h3>
+						</div>
+						<div class="panel-body">
+							<div class="media">
+								<div class="media-left media-top">
+									<a href="#"> <img class="media-object"
+										src="http://www.placehold.it/64x64" alt="...">
+									</a>
+								</div>
+								<div class="media-body">
+
+							<?php echo $thr['frage'];?>
+						</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+						<?php echo "/" . $thr['pfad']; ?>
+						<span class="pull-right">Gefragt am <?php echo $thr['time']; ?></span>
+						</div>
+					</div>
+					<br>
+
+
+				</div>
 				<div class="col-lg-1"></div>
 			</div>
-			<!-- End of Sections -->
+			<!-- Ende Thread Frage -->
+
+			<!-- Beginn Antworten Thread -->
+			<div class="row">
+				<div class="col-lg-1"></div>
+				<div class="col-lg-10">
+				<?php while($ans = $ansdaten->fetch_array()) { ?>
+			
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<a href="#"><?php echo $ans['user'] ?></a>
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div class="media">
+								<div class="media-left media-top">
+									<a href="#"> <img class="media-object"
+										src="http://www.placehold.it/64x64" alt="...">
+									</a>
+								</div>
+								<div class="media-body">
+							<?php echo $ans['comment']; ?>
+							</div>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<a href="#" data-toggle="tooltip" data-placement="top"> 
+								<span class="glyphicon glyphicon-menu-up"
+								aria-hidden="true"></span></a>
+						<?php echo " " . $ans['voting'] . " "; ?>
+						<a href="#" data-toggle="tooltip" data-placement="top"
+								title="Tooltip on top"> <span
+								class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
+
+							<span class="pull-right">Gefragt am <?php echo $ans['time']; ?></span>
+						</div>
+					</div>
+					
+				<?php } ?>
+			</div>
+				<div class="col-lg-1"></div>
+			</div>
+			<!-- Ende der Thread Antworten -->
+
 
 		</div>
 
@@ -114,6 +192,7 @@ $thrdaten = $mysqli->query ( $query );
 	</div>
 
 	<script>
+	
 	$('#myAlert').on('closed.bs.alert', function () {
 		  // do something…
 		})

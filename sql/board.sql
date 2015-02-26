@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 25. Feb 2015 um 23:29
+-- Erstellungszeit: 26. Feb 2015 um 22:32
 -- Server Version: 5.6.21
 -- PHP-Version: 5.6.3
 
@@ -19,6 +19,29 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `board`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `answer`
+--
+
+CREATE TABLE IF NOT EXISTS `answer` (
+`id` int(11) NOT NULL,
+  `thread_id` int(11) NOT NULL,
+  `user` varchar(50) NOT NULL,
+  `comment` text NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `voting` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `answer`
+--
+
+INSERT INTO `answer` (`id`, `thread_id`, `user`, `comment`, `time`, `voting`) VALUES
+(1, 1, 'norukh', 'Man kann einen String mit der Funktion String erstellen und das sieht so aus:sdjfskdffskdfjksdjfsdkfskldfjlskdfjsdkjfklsjdlfkjsdksdddfjklsdfklsdfklsdfsdfjsdkfjksdjfkljsdjniconiconcsshaqwweddehr', '2015-02-26 19:55:35', 0),
+(2, 3, 'Admin', 'Das geht so und so blabla', '2015-02-26 20:50:13', 0);
 
 -- --------------------------------------------------------
 
@@ -56,18 +79,26 @@ CREATE TABLE IF NOT EXISTS `thread` (
   `titel` varchar(200) NOT NULL,
   `frage` text NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `thread`
 --
 
 INSERT INTO `thread` (`id`, `kapitel_id`, `user`, `titel`, `frage`, `time`) VALUES
-(1, 1, 'Admin', 'Java String erstellen?', 'Hallo ich habe ein Problem wie erstelle ich einen neuen java String?', '2015-02-25 20:01:36');
+(1, 1, 'Admin', 'Java String erstellen?', 'Hallo ich habe ein Problem wie erstelle ich einen neuen java String?', '2015-02-25 20:01:36'),
+(2, 1, 'norukh', 'Probleme 1', 'testtestetstetst Lorem ipsum', '2015-02-26 20:20:38'),
+(3, 1, 'admin23', 'yoyoyoy problem 2', 'sdkf lorem ipsum lorem ipsum', '2015-02-26 20:20:38');
 
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `answer`
+--
+ALTER TABLE `answer`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `kapitel`
@@ -86,6 +117,11 @@ ALTER TABLE `thread`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `answer`
+--
+ALTER TABLE `answer`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT für Tabelle `kapitel`
 --
 ALTER TABLE `kapitel`
@@ -94,7 +130,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT für Tabelle `thread`
 --
 ALTER TABLE `thread`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
